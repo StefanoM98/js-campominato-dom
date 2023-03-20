@@ -12,12 +12,15 @@ btnStart.addEventListener("click", function() {
 
     const gridElem = document.querySelector(".grid");
     // PRIMO IF PER LA SCELTA DELLA MODALITA' FACILE
+    
+    
+
+    
 
     if (userChoiseInput === "facile") {
         const bombNumber = 16;
         const bombs = generateBombs(100 ,bombNumber);
         console.log(bombs);
-        
         // GENERIAMO I NUMERI PER CASELLA
         function getEasyBox () {
             gridElem.innerHTML = "";
@@ -36,12 +39,38 @@ btnStart.addEventListener("click", function() {
             newBox.innerHTML = `<span>${testo}</span>`;
             return newBox;
         }
+       
+        let score = 0
+        const scoreArray = []
+        const maxScore = 100 - bombNumber
+        console.log(maxScore);
+
+        function colorClick() {
+            const clickNumber = parseInt(this.textContent)
+            // BOX NON BOMBA
+            if (!bombs.includes(clickNumber)){
+                this.classList.add("azure");
+                this.removeEventListener("click", colorClick)
+                scoreArray.push();
+                score ++
+                if (maxScore === score){
+                    alert("Hai vinto")
+                    alert("Il tuo punteggio è " + score)
+                }
+            } else {
+                this.classList.add ("red");
+                console.log("BOMBA!")
+                alert("Hai preso un bomba")
+                alert("il tuo punteggio è " + score)
+                window.location.reload()
+            }
+        }    
     } 
     // ORA IMPLEMENTIAMO LA SCELTA DELLA MODALITA' NORMALE
     else if (userChoiseInput === "normale") {
         const bombNumber = 16
-        const bombsMedium = generateBombs(81 ,bombNumber);
-        console.log(bombsMedium);
+        const bombs = generateBombs(81 ,bombNumber);
+        console.log(bombs);
         // btnStart.addEventListener("click", getMediumBox)
     
         // GENERIAMO I NUMERI PER CASELLA
@@ -62,12 +91,40 @@ btnStart.addEventListener("click", function() {
             newBox.innerHTML = `<span>${testo}</span>`;
             return newBox;
         }
+
+        let score = 0
+        const scoreArray = []
+        const maxScore = 81 - bombNumber
+        console.log(maxScore);
+
+        function colorClick() {
+            const clickNumber = parseInt(this.textContent)
+            // BOX NON BOMBA
+            if (!bombs.includes(clickNumber)){
+                this.classList.add("azure");
+                this.removeEventListener("click", colorClick)
+                scoreArray.push();
+                score ++
+                if (maxScore === score){
+                    alert("Hai vinto")
+                    alert("Il tuo punteggio è " + score)
+                }
+            } else {
+                this.classList.add ("red");
+                console.log("BOMBA!")
+                alert("Hai preso un bomba")
+                alert("il tuo punteggio è " + score)
+                window.location.reload()
+            }
+            
+            console.log(clickNumber);
+        }
     }
     // IMPLEMENTIAMO LA SCELTA DELLA MODALITA' DIFFICILE 
     else if (userChoiseInput === "difficile"){
         const bombNumber = 16
-        const bombsHard = generateBombs(49 ,bombNumber);
-        console.log(bombsHard);
+        const bombs = generateBombs(49 ,bombNumber);
+        console.log(bombs);
         // btnStart.addEventListener("click", getHardBox)
     
         // GENERIAMO I NUMERI PER CASELLA
@@ -88,21 +145,38 @@ btnStart.addEventListener("click", function() {
             newBox.innerHTML = `<span>${testo}</span>`;
             return newBox;
         }
+
+        let score = 0
+        const scoreArray = []
+        const maxScore = 49 - bombNumber
+        console.log(maxScore);
+
+        function colorClick() {
+            const clickNumber = parseInt(this.textContent)
+            // BOX NON BOMBA
+            if (!bombs.includes(clickNumber)){
+                this.classList.add("azure");
+                this.removeEventListener("click", colorClick)
+                scoreArray.push();
+                score ++
+                if (maxScore === score){
+                    alert("Hai vinto")
+                    alert("Il tuo punteggio è " + score)
+                }
+            } else {
+                this.classList.add ("red");
+                console.log("BOMBA!")
+                alert("Hai preso un bomba")
+                alert("il tuo punteggio è " + score)
+                window.location.reload()
+            }
+        }    
     }
     // RIPULISCO I CAMPI PER NON RICLICCARE IL BOTTONE
     userChoise.value = ""
 
     // FUNZIONE PER IL CLICK SULLA CASELLA
-    function colorClick() {
-        const clickNumber = parseInt(this.textContent)
-        this.classList.add("azure");
-        if (bombs.includes(clickNumber)) {
-            this.classList.add("red")
-            alert();
-            window.location.reload();
-        }
-        console.log(clickNumber);
-    }
+    
 })
 
 
@@ -124,5 +198,8 @@ function generateBombs(maxNumber, numbersQuantity) {
 function getRndNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
+
+// CREIAMO L'ALERT PER IL PUNTEGGIO
+
 
 
