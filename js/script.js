@@ -1,8 +1,3 @@
-// INIZIAMO RICHIAMANDO I NUMERI CHE CI SERVONO DA STAMPARE
-const easyBox = 100;
-const mediumBox = 81;
-const hardBox = 49;
-
 // ORA GENERIAMO LE CASELLE IN BASE AL NUMERO 
 
 const btnStart = document.querySelector("button");
@@ -12,16 +7,21 @@ btnStart.addEventListener("click", function() {
     const userChoise = document.getElementById("difficoltà");
     const userChoiseInput = userChoise.value;
     console.log(userChoise);
+    // NUMERO DI BOMBE
+    
 
     const gridElem = document.querySelector(".grid");
     // PRIMO IF PER LA SCELTA DELLA MODALITA' FACILE
 
     if (userChoiseInput === "facile") {
+        const bombNumber = 16;
+        const bombs = generateBombs(100 ,bombNumber);
+        console.log(bombs);
         
         // GENERIAMO I NUMERI PER CASELLA
         function getEasyBox () {
             gridElem.innerHTML = "";
-            for (let i = 1; i <= easyBox; i++) {
+            for (let i = 1; i <= 100; i++) {
                 const grid = generateNewBox(i);
                 grid.addEventListener("click", colorClick);
                 gridElem.append(grid);
@@ -39,12 +39,15 @@ btnStart.addEventListener("click", function() {
     } 
     // ORA IMPLEMENTIAMO LA SCELTA DELLA MODALITA' NORMALE
     else if (userChoiseInput === "normale") {
+        const bombNumber = 16
+        const bombsMedium = generateBombs(81 ,bombNumber);
+        console.log(bombsMedium);
         // btnStart.addEventListener("click", getMediumBox)
     
         // GENERIAMO I NUMERI PER CASELLA
         function getMediumBox () {
             gridElem.innerHTML = "";
-            for (let i = 1; i <= mediumBox; i++) {
+            for (let i = 1; i <= 81; i++) {
                 const grid = generateNewBox(i);
                 grid.addEventListener("click", colorClick);
                 gridElem.append(grid);
@@ -62,12 +65,15 @@ btnStart.addEventListener("click", function() {
     }
     // IMPLEMENTIAMO LA SCELTA DELLA MODALITA' DIFFICILE 
     else if (userChoiseInput === "difficile"){
+        const bombNumber = 16
+        const bombsHard = generateBombs(49 ,bombNumber);
+        console.log(bombsHard);
         // btnStart.addEventListener("click", getHardBox)
     
         // GENERIAMO I NUMERI PER CASELLA
         function getHardBox () {
             gridElem.innerHTML = "";
-            for (let i = 1; i <= hardBox; i++) {
+            for (let i = 1; i <= 49; i++) {
                 const grid = generateNewBox(i);
                 grid.addEventListener("click", colorClick);
                 gridElem.append(grid);
@@ -86,37 +92,22 @@ btnStart.addEventListener("click", function() {
     // RIPULISCO I CAMPI PER NON RICLICCARE IL BOTTONE
     userChoise.value = ""
 
-    const bombNumber = 16;
-    const bombs = generateBombs(easyBox, bombNumber);
-    console.log(bombs);
+    // FUNZIONE PER IL CLICK SULLA CASELLA
+    function colorClick() {
+        const clickNumber = parseInt(this.textContent)
+        this.classList.add("azure");
+        if (bombs.includes(clickNumber)) {
+            this.classList.add("red")
+            alert();
+            window.location.reload();
+        }
+        console.log(clickNumber);
+    }
 })
-
-// FUNZIONE PER IL CLICK SUL BOX
-function colorClick() {
-    const clickNumber = parseInt(this.querySelector("span").textContent)
-    this.classList.add("azure");
-    console.log(clickNumber);
-}
-
-//          ESERCIZIO DELLE BOMBE
-
-
-
-// GENERO LE BOMBE
-
-//inseriscilo dentro il click dello starts
-
 
 
 function generateBombs(maxNumber, numbersQuantity) {
-    
-    // CREARE ARRAY VUOTO
-    //FINCHE LA LUNGHEZZA DI ARRAY E' MINORE DI NUMBERSQUANTITY
-    //      GENERARE IL NUMERO RANDOM 
-    //          CON JS MATH RANDOM 
-    //      SE IL NUMERO NON E' PRESENTE,
-    //      AGGIUNGI
-    //  
+
     const bombArray = [];
     console.log(numbersQuantity);
     while(bombArray.length < numbersQuantity) {
@@ -126,11 +117,12 @@ function generateBombs(maxNumber, numbersQuantity) {
             bombArray.push(rndNumber)
         }
     }
-    // console.log(bombArray);
+
     return bombArray 
 }
 
 function getRndNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
+
 
